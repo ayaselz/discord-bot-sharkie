@@ -1,0 +1,17 @@
+{
+  "name": "discord-bot-sharkie",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "register": "node scripts/register-commands.js"
+  },
+  "keywords": [],
+  "author": "ayaselz",
+  "license": "GNU",
+  "description": "",
+  "dependencies": {
+    "discord-interactions": "^4.0.0",
+    "dotenv": "^16.0.0",
+    "node-fetch": "^3.3.2"
+  }
+}
