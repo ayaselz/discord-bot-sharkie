@@ -1,5 +1,4 @@
 // 纯 Cloudflare Worker 可运行版本
-const PUBLIC_KEY = "fd136e9685f900b749ed099b9f75f480ca85230f714fea95186115afe1c41c09";
 
 // ======= 内置 verifyKey 实现（去掉外部依赖）=======
 async function verifyKey(body, signature, timestamp, clientPublicKey) {
@@ -32,13 +31,13 @@ function hex2bin(hex) {
 // ===================================================
 
 export default {
-  async fetch(request) {
+  async fetch(request, env, ctx) {
     if (request.method === "POST") {
       const signature = request.headers.get("x-signature-ed25519");
       const timestamp = request.headers.get("x-signature-timestamp");
       const body = await request.text();
 
-      const isValid = await verifyKey(body, signature, timestamp, PUBLIC_KEY);
+      const isValid = await verifyKey(body, signature, timestamp, env.DISCORD_PUBLIC_KEY);
       if (!isValid) {
         return new Response("Bad request signature", { status: 401 });
       }
