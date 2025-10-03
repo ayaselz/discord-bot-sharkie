@@ -53,7 +53,7 @@ export default {
       if (data.type === 2 && data.data.name === "hello") {
         return Response.json({
           type: 4,
-          data: { content: "hello world" },
+          data: { content: "hello from Sharkie 🦈" },
         });
       }
 
