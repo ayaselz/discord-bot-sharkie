@@ -1,2 +1,3 @@
-name = "discord-bot-sharkie"
+name = "discord-bot-worker"
+compatibility_date = "2025-10-03"
 main = "src/worker.js"

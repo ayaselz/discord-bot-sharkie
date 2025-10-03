@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "register": "node scripts/register-commands.js"
+    "register": "node scripts/register-commands.js",
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
   },
   "keywords": [],
   "author": "ayaselz",
@@ -13,5 +15,11 @@
     "discord-interactions": "^4.0.0",
     "dotenv": "^16.0.0",
     "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
