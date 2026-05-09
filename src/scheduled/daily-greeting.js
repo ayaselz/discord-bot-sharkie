@@ -1,25 +1,30 @@
 import { sendMessage } from "../utils/discord.js";
+import { getDSTStatus, getSydneyDateStr, getSydneyHour } from '../utils/datetime.js';
 
-export async function run(event, env, ctx) {
-  const sydneyHour = new Date().toLocaleString("en-US", {
-    timeZone: "Australia/Sydney",
-    hour: "numeric",
-    hour12: false
-  });
+async function sendSendGreeting(event, env, ctx) {
+  const sydneyHour = getSydneyHour();
+  if (parseInt(sydneyHour) !== 8) return;
 
-  if (parseInt(sydneyHour) !== 8) {
-    return;
+  const dateStr = getSydneyDateStr();
+  const dstInfo = getDSTStatus(new Date());
+  let dstMessage = '';
+  if (dstInfo.reminderLevel === 'today') {
+    dstMessage = dstInfo.isDST 
+      ? '⚠️ 今天开始进入夏令时 (AEDT)，时钟已拨快一小时！'
+      : '⚠️ 今天夏令时结束，进入冬令时 (AEST)，时钟已拨慢一小时！';
+  } else if (dstInfo.reminderLevel === 'week') {
+    const dateLabel = dstInfo.transitionDate.toLocaleDateString('zh-CN', { month: 'long', day: 'numeric' });
+    dstMessage = dstInfo.isDST
+      ? `⚠️ 夏令时将于${dateLabel}(周日)结束，届时时钟将拨慢一小时。`
+      : `⚠️ 夏令时将于${dateLabel}(周日)开始，届时时钟将拨快一小时。`;
+  } else {
+    // 正常状态，显示当前时区简称
+    dstMessage = dstInfo.isDST 
+      ? '当前夏令时中 (AEDT)' 
+      : '当前非夏令时 (AEST)';
   }
 
-  const dateStr = new Date().toLocaleDateString("zh-CN", {
-    timeZone: "Australia/Sydney",
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  });
-
-  const message = `🌞 早安！现在是${dateStr}。\n今天也要加油哦！`;
-
+  const message = `🌞 早安！现在是${dateStr}。今天也要加油哦！\n\n📅 ${dstMessage}`;
   const channelId = env.DISCORD_CHANNEL_ID;
   const botToken = env.DISCORD_BOT_TOKEN;
 
@@ -30,3 +35,5 @@ export async function run(event, env, ctx) {
 
   ctx.waitUntil(sendMessage(channelId, botToken, message));
 }
+
+export { sendSendGreeting };

@@ -1,6 +1,6 @@
 import { verifyKey } from "./utils/crypto.js";
 import { handle as handleHello } from "./commands/hello.js";
-import { run as runDailyGreeting } from "./scheduled/daily-greeting.js";
+import { sendSendGreeting } from "./scheduled/daily-greeting.js";
 
 export default {
   async fetch(request, env, ctx) {
@@ -31,6 +31,6 @@ export default {
   },
 
   async scheduled(event, env, ctx) {
-    await runDailyGreeting(event, env, ctx);
+    await sendSendGreeting(event, env, ctx);
   }
 };
