@@ -1,6 +1,6 @@
 name = "discord-bot-sharkie"
 compatibility_date = "2025-10-03"
-main = "src/worker.js"
+main = "src/index.js"
 
 [triggers]
 crons = ["0 21 * * *", "0 22 * * *"]
