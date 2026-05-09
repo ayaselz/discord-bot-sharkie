@@ -64,6 +64,17 @@ export default {
   },
 
   async scheduled(event, env, ctx) {
+      // 获取当前悉尼时间的小时数。如果不是早上8点，直接返回，不发送消息
+    const sydneyHour = new Date().toLocaleString('en-US', {
+      timeZone: 'Australia/Sydney',
+      hour: 'numeric',
+      hour12: false
+    });
+
+    if (parseInt(sydneyHour) !== 8) {
+      return;
+    }
+
     const dateStr = new Date().toLocaleDateString('zh-CN', {
       timeZone: 'Australia/Sydney',
       year: 'numeric',

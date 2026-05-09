@@ -3,4 +3,4 @@ compatibility_date = "2025-10-03"
 main = "src/worker.js"
 
 [triggers]
-crons = ["0 22 * * *"]
+crons = ["0 21 * * *", "0 22 * * *"]
