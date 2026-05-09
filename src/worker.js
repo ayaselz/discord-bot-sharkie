@@ -62,4 +62,38 @@ export default {
 
     return new Response("OK");
   },
+
+  async scheduled(event, env, ctx) {
+    const dateStr = new Date().toLocaleDateString('zh-CN', {
+      timeZone: 'Australia/Sydney',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+
+    const message = `🌞 早安！现在是${dateStr}。\n今天也要加油哦！`;
+
+    const channelId = env.DISCORD_CHANNEL_ID;
+    const botToken = env.DISCORD_BOT_TOKEN;
+
+    if (!channelId || !botToken) {
+      console.error("Missing DISCORD_CHANNEL_ID or DISCORD_BOT_TOKEN");
+      return;
+    }
+
+    ctx.waitUntil(
+      fetch(`https://discord.com/api/v10/channels/${channelId}/messages`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bot ${botToken}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ content: message })
+      }).then(res => {
+        if (!res.ok) {
+          console.error('发送失败', res.status);
+        }
+      })
+    );
+  }
 };
