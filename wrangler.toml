@@ -4,3 +4,7 @@ main = "src/index.js"
 
 [triggers]
 crons = ["0 21 * * *", "0 22 * * *"]
+
+[observability.logs]
+enabled = false
+invocation_logs = true
