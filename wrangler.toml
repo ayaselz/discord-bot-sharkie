@@ -8,3 +8,8 @@ crons = ["0 21 * * *", "0 22 * * *"]
 [observability.logs]
 enabled = true
 invocation_logs = true
+
+[vars]
+DISCORD_GUILD_ID=1421162339989717083
+DISCORD_CHANNEL_ID=1421162346436366398
+DISCORD_APP_ID=1422090891513827359
