@@ -1,4 +1,9 @@
-export async function verifyKey(body, signature, timestamp, clientPublicKey) {
+export async function verifyKey(
+  body: string,
+  signature: string,
+  timestamp: string,
+  clientPublicKey: string
+): Promise<boolean> {
   const encoder = new TextEncoder();
   const data = encoder.encode(timestamp + body);
   const sig = hex2bin(signature);
@@ -18,7 +23,7 @@ export async function verifyKey(body, signature, timestamp, clientPublicKey) {
   );
 }
 
-function hex2bin(hex) {
+function hex2bin(hex: string): Uint8Array {
   const bytes = new Uint8Array(hex.length / 2);
   for (let i = 0; i < bytes.length; i++) {
     bytes[i] = parseInt(hex.substr(i * 2, 2), 16);

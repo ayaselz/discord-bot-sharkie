@@ -1,4 +1,8 @@
-export async function sendMessage(channelId, botToken, content) {
+export async function sendMessage(
+  channelId: string,
+  botToken: string,
+  content: string
+): Promise<boolean> {
   const res = await fetch(`https://discord.com/api/v10/channels/${channelId}/messages`, {
     method: "POST",
     headers: {
